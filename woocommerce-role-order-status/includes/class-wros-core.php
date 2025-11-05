@@ -26,8 +26,14 @@ class WROS_Core {
 			return;
 		}
 
-		$user_id = (int) $order->get_user_id();
-		$roles = $user_id ? (array) get_userdata( $user_id )->roles : [];
+                $user_id = (int) $order->get_user_id();
+                $roles = [];
+                if ( $user_id ) {
+                        $user = get_userdata( $user_id );
+                        if ( $user instanceof WP_User ) {
+                                $roles = (array) $user->roles;
+                        }
+                }
 		$gateway = $order->get_payment_method();
 
 		$settings = $this->get_settings();
