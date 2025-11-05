@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<ruleset name="WROS Standards">
+  <file>woocommerce-role-order-status</file>
+  <rule ref="WordPress" />
+  <rule ref="WordPress-Extra" />
+  <rule ref="WordPress-Docs" />
+  <config name="testVersion" value="7.4-"/>
+</ruleset>

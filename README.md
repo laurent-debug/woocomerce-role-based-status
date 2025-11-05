@@ -1,27 +1,32 @@
 # WooCommerce Role-based Order Status (WROS)
 
-Ce plugin permet de définir automatiquement le statut des commandes WooCommerce selon le **rôle utilisateur** et éventuellement le **mode de paiement**.
+Set WooCommerce order status based on the customer role, with optional overrides by payment method. Useful to send B2B invoice orders to `pending` and retail invoice orders to `on-hold`, while keeping card/PayPal flows unchanged.
 
-## 🎯 Objectif
-Différencier les clients **professionnels** et **particuliers** pour faciliter le suivi des paiements et des relances.
+## Features
+- Role → Status mapping.
+- Optional Role × Payment Method → Status overrides.
+- Safe guardrails: never downgrade from `processing/completed`.
+- Admin UI with WordPress Settings API.
+- Logs (WP debug log) and filters to extend.
 
-## ⚙️ Fonctionnalités
-- Mapping **Rôle → Statut** (ex. wholesaler → pending).
-- Mapping **Rôle × Méthode de paiement → Statut** (ex. customer × invoice → on-hold).
-- Interface d’administration simple dans WooCommerce.
-- Compatibilité complète avec tous les statuts WooCommerce (`pending`, `processing`, `on-hold`, `completed`, etc.).
-- Pas de modification des commandes déjà payées.
+## Requirements
+- PHP >= 7.4
+- WordPress >= 6.0
+- WooCommerce >= 7.0
 
-## 🧱 Installation
-1. Télécharge le dossier `woocommerce-role-order-status` dans `wp-content/plugins/`.
-2. Active le plugin dans l’admin WordPress.
-3. Configure les mappings dans **WooCommerce → Settings → Role Order Status**.
+## Install
+1. Copy the plugin folder to `wp-content/plugins/woocommerce-role-order-status`.
+2. Activate in WP Admin.
+3. Go to **WooCommerce → Settings → Role Order Status** and configure mappings.
 
-## 🧩 Exemples
-- **Client pro** (rôle : `wholesaler`, paiement : facture) → statut `pending`.
-- **Client particulier** (rôle : `customer`, paiement : facture) → statut `on-hold`.
-- **Paiement par carte** → comportement standard de WooCommerce.
+## Notes
+- Only applies when the order does not already have a paid status.
+- You can target specific gateways (e.g., invoice) with overrides.
 
-## 🔒 Licence
-GPL-2.0 or later  
-© Fermentierra — libre d’utilisation, de modification et de distribution sous la même licence.
+## Filters
+- `wros_effective_status` — filter the decided status before applying.
+- `wros_should_apply` — return false to skip for a given order.
+
+## Dev
+- `composer install`
+- Coding standards via `phpcs` and `phpstan`.
